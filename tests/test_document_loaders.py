@@ -6,9 +6,10 @@ from reportlab.pdfgen import canvas
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from src.docvector.core.document_loaders.base import DocumentLoader
 from src.docvector.core.document_loaders.text_loader import TextLoader
 from src.docvector.core.document_loaders.pdf_loader import PdfLoader
-
+from src.docvector.core.document_loaders.factory import DocumentLoaderFactory
 @pytest.fixture
 def create_text_file():
     test_file = "test.txt"
@@ -37,3 +38,14 @@ def test_load_pdf_file(create_pdf_file):
     pdf_loader = PdfLoader()
     file_text = pdf_loader.load(create_pdf_file)
     assert file_text == "Test: Hello, This is File Read Test\n"
+
+def test_document_factory(create_text_file, create_pdf_file):
+    factory = DocumentLoaderFactory()
+    text_loader = factory.get_loader(create_text_file)
+    assert isinstance(text_loader, DocumentLoader)
+    assert isinstance(text_loader, TextLoader)
+
+    pdf_loader = factory.get_loader(create_pdf_file)
+    assert isinstance(pdf_loader, DocumentLoader)
+    assert isinstance(pdf_loader, PdfLoader)
+
