@@ -1,5 +1,5 @@
-from docvector.core.document_loaders.base import DocumentLoader
-from PyPDF2 import PdfReader
+from src.docvector.core.document_loaders.base import DocumentLoader
+from pypdf import PdfReader
 
 class PdfLoader(DocumentLoader):
     def load(self, path:str)->str:

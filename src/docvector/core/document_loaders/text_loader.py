@@ -1,4 +1,4 @@
-from docvector.core.document_loaders.base import DocumentLoader
+from src.docvector.core.document_loaders.base import DocumentLoader
 
 
 class TextLoader(DocumentLoader):
