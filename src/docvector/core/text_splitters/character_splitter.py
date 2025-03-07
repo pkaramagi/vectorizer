@@ -18,5 +18,5 @@ class CharacterTextSplitter(TextSplitter):
         while start_point < len(text):
             end_point = start_point + self.chunk_size
             chunks.append(text[start_point:end_point])
-            start += (self.chunk_size - self.chunk_overlap)
+            start_point += (self.chunk_size - self.chunk_overlap)
         return chunks
