@@ -8,6 +8,8 @@ class ChromaDB(VectorDB):
         self.client = chromadb.PersistentClient(path=persist_dir)
         self.collection_name = collection_name
         self.embedding_dim = embedding_dim
+        self._create_collection()
+        
 
     @property
     def _doc(self) -> Dict[str, Any]:
@@ -27,6 +29,7 @@ class ChromaDB(VectorDB):
         ids = []
         texts = []
         embeddings = []
+        
 
         for vector in vectors:
             document_id = vector.get("id")
