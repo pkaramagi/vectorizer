@@ -1,6 +1,6 @@
-from src.docvector.core.document_loaders.base import DocumentLoader
-from src.docvector.core.document_loaders.pdf_loader import PdfLoader
-from src.docvector.core.document_loaders.text_loader import TextLoader
+from core.document_loaders.base import DocumentLoader
+from core.document_loaders.pdf_loader import PdfLoader
+from core.document_loaders.text_loader import TextLoader
 
 
 class DocumentLoaderFactory:

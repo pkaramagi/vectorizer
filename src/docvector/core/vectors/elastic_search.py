@@ -1,6 +1,6 @@
 from typing import Any, Dict, List
 from elasticsearch import Elasticsearch
-from src.docvector.core.vectors.base import VectorDB
+from core.vectors.base import VectorDB
 
 
 class ElasticSearchDB(VectorDB):

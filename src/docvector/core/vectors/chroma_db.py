@@ -1,6 +1,6 @@
 from typing import Any, Dict, List
 import chromadb
-from src.docvector.core.vectors.base import VectorDB
+from core.vectors.base import VectorDB
 
 
 class ChromaDB(VectorDB):

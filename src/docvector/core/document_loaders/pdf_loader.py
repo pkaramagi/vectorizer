@@ -1,4 +1,4 @@
-from src.docvector.core.document_loaders.base import DocumentLoader
+from core.document_loaders.base import DocumentLoader
 from pypdf import PdfReader
 
 class PdfLoader(DocumentLoader):

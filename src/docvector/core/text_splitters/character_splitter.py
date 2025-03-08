@@ -1,8 +1,8 @@
 from typing import List
-from src.docvector.core.text_splitters.base import TextSplitter
+from core.text_splitters.base import TextSplitter
 
 class CharacterTextSplitter(TextSplitter):
-    def __init_(self, chunk_size: int = 1000, chunk_overlap: int = 200):
+    def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 200):
         if chunk_size <= 0:
             raise ValueError("Chunk Size must be a positive integer")
         if chunk_overlap < 0:
