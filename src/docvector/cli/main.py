@@ -23,11 +23,9 @@ def process(
         
         if embedder_type == "huggingface":
             embedder = HuggingFaceEmbedder()
-        elif embedder_type == "openai":
-            embedder = OpenAIEmbedder(settings.openai.model_name)
         else: 
             embedder = OpenAIEmbedder(settings.openai.model_name)  
-            
+
         if db_type == "chroma":
             
             vector_db = ChromaDB(
@@ -59,12 +57,15 @@ def process(
 def query(
     question: str,
     top_k: int = typer.Option(5, help="Number of results to return"),
-    db_type: str = typer.Option("chroma", help="Vector database type [chroma|elasticsearch]")
+    db_type: str = typer.Option("chroma", help="Vector database type [chroma|elasticsearch]"),
+    embedder_type:str = typer.Option("Openai", help="Embedder type[openai|huggingface]")
 ):
     """Query the vector database with a question"""
     try:
-        # Initialize components
-        embedder = OpenAIEmbedder(settings.openai.model_name)
+        if embedder_type == "huggingface":
+            embedder = HuggingFaceEmbedder()
+        else: 
+            embedder = OpenAIEmbedder(settings.openai.model_name)
         
         # Initialize vector DB client
         if db_type == "chroma":
@@ -80,13 +81,13 @@ def query(
         else:
             raise ValueError(f"Unsupported database type: {db_type}")
         
-        # Generate query embedding
+        
         query_embedding = embedder.embed(question)
       
         
         # Perform similarity search
         results = vector_db.search_vectors(query_embedding, top_k)
-        
+        print(results)
         # Display results
         typer.echo("\nSearch results:")
         for i, result in enumerate(results, 1):
