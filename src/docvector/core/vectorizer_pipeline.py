@@ -15,7 +15,12 @@ class VectorizationPipeline:
     def process_document(self, path:str) -> None:
         doc_loader = DocumentLoaderFactory.get_loader(path)
         text = doc_loader.load(path)
-        chunks = self.splitter.split(text)
+        if self.embedder.embedder_type == "openai":
+            chunks = self.splitter.chunk_text(text, 1500, "text-embedding-3-small")
+        else:
+            chunks = self.splitter.split(text)
+            
+       
 
         vectors = []
         for i, chunk in enumerate(chunks):
@@ -23,9 +28,11 @@ class VectorizationPipeline:
             embedding = self.embedder.embed(chunk)
             vectors.append({
                 'id': vector_id,
-                'document': chunk,
+                'text': chunk,
                 'embedding': embedding
             })
+
+       
 
         self.vector_db.save_vectors(vectors)
 
