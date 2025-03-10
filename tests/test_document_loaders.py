@@ -1,19 +1,16 @@
 import pytest
-import sys
 import os
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.docvector.core.document_loaders.base import DocumentLoader
 from src.docvector.core.document_loaders.text_loader import TextLoader
 from src.docvector.core.document_loaders.pdf_loader import PdfLoader
 from src.docvector.core.document_loaders.factory import DocumentLoaderFactory
+
 @pytest.fixture
 def create_text_file():
     test_file = "test.txt"
-   
     with open(test_file, 'w') as file:
         file.write("Test: Hello, This is File Read Test")
     yield test_file
@@ -27,7 +24,6 @@ def create_pdf_file():
     c.save()
     yield pdf_file
     os.remove(pdf_file)
-
 
 def test_load_text_file(create_text_file):
     text_loader = TextLoader()
@@ -48,4 +44,9 @@ def test_document_factory(create_text_file, create_pdf_file):
     pdf_loader = factory.get_loader(create_pdf_file)
     assert isinstance(pdf_loader, DocumentLoader)
     assert isinstance(pdf_loader, PdfLoader)
+
+def test_unsupported_file_format():
+    factory = DocumentLoaderFactory()
+    with pytest.raises(ValueError, match="Unsupported File Format"):
+        factory.get_loader("unsupported_file_format.docx")
 

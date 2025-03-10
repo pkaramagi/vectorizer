@@ -34,3 +34,9 @@ def test_character_splitter(create_character_splitter, create_test_data):
     char_splitter.chunk_overlap = 5
     splits = char_splitter.split(create_test_data)
     assert splits[0] == "Practical "
+
+def test_chunk_text(create_character_splitter, create_test_data):
+    char_splitter = create_character_splitter
+    chunks = char_splitter.chunk_text(create_test_data, token_limit=50, model="text-embedding-3-small")
+    assert len(chunks) > 0
+    assert isinstance(chunks, List)
